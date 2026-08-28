@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart';
+dimport 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../data/secrets/secrets_manager.dart';
 import '../../../common/constants/app_text_styles.dart';
 import '../../../common/widgets/app_button.dart';
 import '../../../common/widgets/app_card.dart';
@@ -44,7 +46,7 @@ class OpenBotCard extends StatelessWidget {
         AppButton(
           buttonStyle: AppButtonStyle.secondary,
           onTap: () => launchUrl(
-            Uri.parse('https://t.me/IU_Alumni_Notification_Bot'),
+            Uri.parse(context.read<SecretsManager>().botUrl),
             mode: LaunchMode.externalApplication,
           ),
           child: Text(
