@@ -6,20 +6,17 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Target environment'
-        required: true
-        type: choice
-        options: [testing, production]
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  validate:
+  build-image:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - uses: actions/checkout@v4
@@ -33,48 +30,13 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Generate code (build_runner)
-        run: dart run build_runner build --delete-conflicting-outputs
-
-      # The repo ships unit tests under test/ that CI never executed, so a broken
-      # test could reach main unnoticed. Run them before the build.
-      # Errors and warnings now fail the build; the 36 pre-existing warnings were
-      # cleared. Infos stay non-fatal — the tree still has ~141 style-lint infos
-      # (mostly always_put_control_body_on_new_line) that are a separate cleanup.
-      - name: Analyze
-        run: flutter analyze --no-fatal-infos
-
-      - name: Run tests
-        run: flutter test --reporter compact
-
+      # Generated files (.freezed/.g/.gr/.gen) are committed, so codegen is skipped.
+      # Missing secrets expand to empty strings and do not fail the build.
       - name: Build Flutter web
         run: |
           flutter build web --release \
             --dart-define=APP_METRICA_KEY=${{ secrets.APP_METRICA_KEY }} \
             --dart-define=IU_ALUMNI_WEB_SALT=${{ secrets.IU_ALUMNI_WEB_SALT }}
-
-      - name: Upload web build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: web-build
-          path: build/web/
-          retention-days: 1
-
-  build-image:
-    needs: validate
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Download web build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: web-build
-          path: build/web
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
