@@ -20,6 +20,7 @@ services:
       # Derived from DOMAIN in DEPLOY_DIR/.env at deploy time.
       # The entrypoint replaces __API_BASE_URL__ in index.html with this value.
       - API_BASE_URL=https://api.${DOMAIN}
+      - IU_ALUMNI_BOT_URL=${IU_ALUMNI_BOT_URL}
     networks:
       iu_alumni_network:
         aliases:

@@ -14,3 +14,20 @@ String getApiBaseUrl() {
   } catch (_) {}
   return const String.fromEnvironment('API_BASE_URL');
 }
+
+/// Reads the Telegram bot URL injected at runtime by the nginx entrypoint into
+/// window.iuAlumniBotUrl (see web/index.html placeholder). Falls back to the
+/// compile-time --dart-define value if not set.
+String getBotUrl() {
+  try {
+    final jsValue = globalContext['iuAlumniBotUrl'];
+    if (jsValue != null && jsValue.typeofEquals('string')) {
+      final url = (jsValue as JSString).toDart;
+      if (url.startsWith('http')) return url;
+    }
+  } catch (_) {}
+  return const String.fromEnvironment(
+    'IU_ALUMNI_BOT_URL',
+    defaultValue: 'https://t.me/IU_Alumni_Notification_Bot',
+  );
+}

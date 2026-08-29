@@ -4,10 +4,7 @@ class SecretsManager {
   String? webSalt;
   String? appMetricaKey;
   String? hostPath;
-  String botUrl = const String.fromEnvironment(
-    'IU_ALUMNI_BOT_URL',
-    defaultValue: 'https://t.me/IU_Alumni_Notification_Bot',
-  );
+  String botUrl = getBotUrl();
 
   Future<void> init() async {
     webSalt = const String.fromEnvironment('IU_ALUMNI_WEB_SALT');
