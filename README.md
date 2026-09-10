@@ -39,9 +39,10 @@ flutter run --dart-define=API_BASE_URL=http://10.0.2.2:8080 \
 
 ## Deployment
 
-The web target deploys automatically on push to `develop` (testing) or `main` (production).  
-`API_BASE_URL` is baked into the binary at build time from the `API_BASE_URL` GitHub environment secret.  
-A separate Docker image is built per environment (testing tag: `sha-test`, production tag: `sha`).  
+The web target deploys automatically on push to `main`.
+`API_BASE_URL` (`https://iu.alumap.ru`) and `IU_ALUMNI_BOT_URL` are hardcoded
+in `lib/data/config/api_config.dart` and can be overridden at build time with
+`--dart-define`.
 See [iu-alumni-infra](https://github.com/iu-alumni/iu-alumni-infra) for the full deployment guide.
 
 

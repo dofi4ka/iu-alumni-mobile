@@ -3,8 +3,8 @@ version: "3.8"
 # ─────────────────────────────────────────────────────────────
 # IU Alumni Mobile - Production Docker Swarm stack (Flutter web)
 #
-# API_BASE_URL is injected at container start: the nginx entrypoint replaces the
-# __API_BASE_URL__ placeholder in index.html with https://api.DOMAIN from .env.
+# API_BASE_URL and IU_ALUMNI_BOT_URL are hardcoded in Flutter
+# (lib/data/config/api_config.dart). No runtime configuration is needed.
 #
 # Deploy:
 #   docker stack deploy -c docker-stack.yml iu_alumni_mobile --with-registry-auth
@@ -16,11 +16,6 @@ version: "3.8"
 services:
   mobile:
     image: ${MOBILE_IMAGE}
-    environment:
-      # Derived from DOMAIN in DEPLOY_DIR/.env at deploy time.
-      # The entrypoint replaces __API_BASE_URL__ in index.html with this value.
-      - API_BASE_URL=https://api.${DOMAIN}
-      - IU_ALUMNI_BOT_URL=${IU_ALUMNI_BOT_URL}
     networks:
       iu_alumni_network:
         aliases:
