@@ -30,7 +30,8 @@ android {
     signingConfigs {
         release {
             // Read from environment variables so the keystore is never committed.
-            // Set these before building (see build-apk.sh for details):
+            // The RuStore release workflow (.github/workflows/release-rustore.yml)
+            // supplies these from GitHub Secrets:
             //   KEYSTORE_PATH   – absolute path to the .jks / .keystore file
             //   KEYSTORE_PASS   – keystore password
             //   KEY_ALIAS       – key alias inside the keystore
