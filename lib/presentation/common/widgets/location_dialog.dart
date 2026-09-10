@@ -20,7 +20,8 @@ class LocationDialog extends StatelessWidget {
     BuildContext context, [
     bool previousWasNone = false,
   ]) => showCupertinoSheet<String>(
-    context: context, builder: (context) => BlocProvider(
+    context: context,
+    pageBuilder: (context) => BlocProvider(
       create: (context) =>
           LocationSuggestionsCubit(context.read<MapRepository>()),
       child: LocationDialog(previousWasNone: previousWasNone),

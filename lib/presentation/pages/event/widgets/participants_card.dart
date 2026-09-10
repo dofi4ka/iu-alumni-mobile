@@ -14,7 +14,8 @@ class ParticipantsCard extends StatelessWidget {
   const ParticipantsCard({super.key});
 
   void _showParticipants(BuildContext context) => showCupertinoSheet(
-    context: context, builder: (_) => BlocProvider.value(
+    context: context,
+    pageBuilder: (_) => BlocProvider.value(
       value: context.read<OneEventCubit>(),
       child: const ParticipantsModal(),
     ),

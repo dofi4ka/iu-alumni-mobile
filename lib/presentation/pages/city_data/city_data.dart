@@ -127,7 +127,8 @@ class _InCityButton extends StatelessWidget {
       await onOpen();
       if (!context.mounted) return;
       showCupertinoSheet(
-        context: context, builder: (context) => _InCitySheet(
+        context: context,
+        pageBuilder: (context) => _InCitySheet(
           profiles: profiles,
           isLoading: isLoading,
           nextCursor: nextCursor,
