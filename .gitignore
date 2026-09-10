@@ -46,6 +46,9 @@ app.*.map.json
 .netlify
 keystore-release.jks
 release/
+*.keystore
+*.jks
+key.properties
 
 # Generated files
 
