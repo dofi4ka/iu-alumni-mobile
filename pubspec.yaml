@@ -67,8 +67,14 @@ flutter:
         - asset: assets/fonts/Montserrat-SemiBold.ttf
 
 flutter_launcher_icons:
+  image_path: assets/app_icon/app_icon.png
+  android: true
+  ios: true
+  remove_alpha_ios: true
   web:
     generate: true
-    image_path: assets/app_icon/app_icon.png
     background_color: "#40BA21"
+  adaptive_icon_background: "#40BA21"
+  adaptive_icon_foreground: assets/app_icon/app_icon.png
+  adaptive_icon_foreground_inset: 16
 

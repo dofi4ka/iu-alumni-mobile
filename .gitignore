@@ -50,6 +50,11 @@ release/
 *.jks
 key.properties
 
+# Signing / API private keys — never commit these (RuStore API + keystore)
+*.pem
+key.b64
+owner.b64
+
 # Generated files
 
 *.g.dart
